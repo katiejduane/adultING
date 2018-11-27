@@ -1,5 +1,41 @@
 # adultING
 
+# pygame imports
+import pygame
+from pygame.sprite import Group, groupcollide
+
+# imports from my files
+from adult import Adult
+from life import Life
+from buildings import Buildings
+
+# Initialize pygame
+pygame.init()
+
+# Make a screen with a size. It must be a TUPLE.   ### my background image doesn't really show until you click the red X, then it flickers!?!?
+screen_size = (600, 500) # may need to adjust!
+pygame_screen = pygame.display.set_mode(screen_size) 
+
+pygame.display.set_caption('adultING') 
+
+# game variables
+background_image = pygame.image.load('map_lg.png')
+
+# object declarations
+
+# main game loop
+game_on = True
+while game_on == True:
+    # ======= Event Checker ======== #
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            game_on = False
+
+    # draw stuff
+    pygame_screen.blit(background_image,[0,-700])
+
+    pygame.display.flip()
+
 """Narrative: This game is derivative of my original text RPG game, where the player is posed a series of questions
 that earn or lose points in various levels of life/adulting: health, money, love, career, growth, and adventurism. 
 With this interface-based RPG game, the ideology is similar, but more exploratory. The player will start out on the
@@ -38,5 +74,11 @@ how he handled collisions.
 === i'll also need to figure out the question interface, since they aren't (probably, looking at the time i'll have)
 going to be entering other spaces/rooms/backgrounds. will the game screen darken, or will be there be an overlay? how
 will the text appear?
+
+- make a buildings class so i can make them sprites for groupcollide
+
+- make a splash screen same size as the screen, need not be as large as the map image, OR, create a small 
+
+- 512 x 480 ish for screen size, but you'll have to play with it 
 
 """
