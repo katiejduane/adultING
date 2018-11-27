@@ -8,20 +8,29 @@ from pygame.sprite import Group, groupcollide
 from adult import Adult
 from life import Life
 from buildings import Buildings
+from backgrounds import Background
 
 # Initialize pygame
 pygame.init()
 
-# Make a screen with a size. It must be a TUPLE.   ### my background image doesn't really show until you click the red X, then it flickers!?!?
-screen_size = (600, 500) # may need to adjust!
-pygame_screen = pygame.display.set_mode(screen_size) 
+# Make a screen with a size. It must be a TUPLE
+screen_size = (600, 500) 
+screen = pygame.display.set_mode(screen_size) 
 
 pygame.display.set_caption('adultING') 
 
 # game variables
-background_image = pygame.image.load('map_lg.png')
+map_image = pygame.image.load('map_lg.png')
+char_fr = pygame.image.load("char_fr.png")
+char_bk = pygame.image.load("char_bk.png")
+char_r = pygame.image.load("char_right.png")
+char_l = pygame.image.load("char_left.png")
 
 # object declarations
+player_1 = Adult("Katie", char_fr, char_bk, char_r, char_l)
+adult_img = char_fr
+background = Background(screen, 'map_lg.png')
+store = Buildings("Store", -644, -1136, -856, -1232)
 
 # main game loop
 game_on = True
@@ -30,10 +39,38 @@ while game_on == True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game_on = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == 274:
+                background.should_move('up', True)
+                adult_img = char_fr
+            elif event.key == 273:
+                background.should_move('down', True)
+                adult_img = char_bk
+            elif event.key == 275:
+                background.should_move('right', True)
+                adult_img = char_r
+            elif event.key == 276:
+                background.should_move('left', True)
+                adult_img = char_l
+        elif event.type == pygame.KEYUP:
+            if event.key == 274:
+                background.should_move('up', False)
+            elif event.key == 273:
+                background.should_move('down', False)
+            elif event.key == 275:
+                background.should_move('right', False)
+            elif event.key == 276:
+                background.should_move('left', False)
+        if background.x <= store.x1 and background.x >= store.x2 and background.y <= store.y1 and background.y >= store.y2:
+            print ("Yes")
 
+
+    
     # draw stuff
-    pygame_screen.blit(background_image,[0,-700])
-
+    # screen.blit(map_image,[0,-700]) 
+    background.draw_background() # map
+    screen.blit(player_1.image, [player_1.x, player_1.y]) #character
+    player_1.image_selector(screen, adult_img)
     pygame.display.flip()
 
 """Narrative: This game is derivative of my original text RPG game, where the player is posed a series of questions
