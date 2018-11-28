@@ -22,17 +22,13 @@ class Adult(object):
         self.total = self.health + self.career + self.adventure + self.love + self.finance + self.growth
 
     def __repr__(self):
-        return "Levels --> Health: %d, Career: %d, Adventure: %d, Love: %s, Finance: %d, Growth: %d " % (self.health, self.career, self.adventure, self.love, self.finance, self.growth)
+        return "Health: %d, Career: %d, Adventure: %d, Love: %s, Finance: %d, Growth: %d " % (self.health, self.career, self.adventure, self.love, self.finance, self.growth)
+    
+    def print_total(self):
+        return "Your Score: %d " % self.total
     
     def image_selector(self, screen, image):
         screen.blit(image, [self.x, self.y])
-        
-        
-
-
-
-    def draw_me(self):
-        pass
     
     def health_adjust(self, health_change):
         self.health += health_change
@@ -46,10 +42,8 @@ class Adult(object):
         self.finance += finance_change
     def growth_adjust(self, growth_change):
         self.growth += growth_change
-    def warning(self):
-        print ("Be careful about the choices you make, levels are getting low!")
-    def congrats(self):
-        print ("Way to go, doll, you're doin' alright!")
+
+
     def update_total(self):
         self.total = self.health + self.career + self.adventure + self.love + self.finance + self.growth
 

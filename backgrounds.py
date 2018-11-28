@@ -37,6 +37,10 @@ class Background(object):
         print (self.y)
 
 
+    def overlay_int(self, screen, image):
+        screen.blit(image, [0, 0])
+
+
 
 
 
