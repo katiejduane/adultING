@@ -18,8 +18,9 @@ from final_score_screen import Final_Score_Screen
 pygame.init()
 pygame.mixer.init()
 
-# music file
-bg_music = pygame.mixer.Sound('brainclaim__saw-cutting-2.wav')
+# music file(s) ---> should i have a light tune in the background during play?
+error_sound = pygame.mixer.Sound('brainclaim__saw-cutting-2.wav')
+bg_music = pygame.mixer.Sound('easy.wav')
 
 # Make a screen with a size. It must be a TUPLE
 screen_size = (600, 500) 
@@ -68,7 +69,7 @@ final_screen = Final_Score_Screen(screen)
 
 
 # sounds
-# bg_music = pygame.mixer.Sound('brainclaim_saw-cutting-2.wav')
+# error_sound = pygame.mixer.Sound('brainclaim_saw-cutting-2.wav')
 
 # ====================MAIN GAME LOOP===================== #
 game_on = True
@@ -102,7 +103,8 @@ while game_on == True:
     # ======= Event Checker ======== #
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
-            splash_on = False    
+            splash_on = False   
+            bg_music.play(-1) # i need it to loop!
         if event.type == pygame.QUIT:
                 game_on = False
         if event.type == pygame.KEYDOWN:
@@ -129,6 +131,7 @@ while game_on == True:
                 background.should_move('left', False)
 
         # =================== Question Logic ===================== #
+        # needs to be modified so player can't answer a question more than once! And maybe a sound @ key press so they know they did it?
 
             if event.key == 13 and over_cafe == True:
                 cafe_int = True
@@ -173,7 +176,7 @@ while game_on == True:
                 elif event.key == 32:
                     travel_int = False
                 elif event.key != pygame.K_1 and event.key != pygame.K_2 and  event.key != pygame.K_3 and event.key != pygame.K_4 and event.key is not None:
-                    bg_music.play() # This isn't working!
+                    error_sound.play() # This isn't working!
                     player_1.question_num += 1
             if event.key == 13 and over_forest == True:
                 forest_int = True
@@ -311,11 +314,11 @@ while game_on == True:
     if splash_on == False:
         screen.blit(player_1.image, [player_1.x, player_1.y])
         player_1.image_selector(screen, adult_img) #character
-    # if cafe_int == False
+    
     # draw splash/welcome
     if splash_on == True:
         screen.blit(welcome_img, [0, 0])
-    # draw char
+
     # conditions for drawing buildings
     if cafe_int == True:
         screen.blit(cafe_img, [0, 0])
@@ -340,7 +343,6 @@ while game_on == True:
     if final_score_screen_on == True:
         final_screen.draw_button()
         
-    
     # draw score buttons
     if splash_on == False:
         score_tracker.draw_button()
