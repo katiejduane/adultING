@@ -37,8 +37,8 @@ class Background(object):
             self.should_move_up = true_or_false
         elif direction == "down":
             self.should_move_down = true_or_false
-        print (self.x)
-        print (self.y)
+        # print (self.x)
+        # print (self.y)
 
 
     def overlay_int(self, screen, image):
