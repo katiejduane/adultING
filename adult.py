@@ -6,6 +6,7 @@ from pygame.sprite import Sprite
 class Adult(object):
     def __init__(self, name, fr_image, bk_image, r_image, l_image): # can pass in additional images here
         self.name = name
+        self.question_num = 0
         self.x = 300
         self.y = 250
         self.fr_image = fr_image
@@ -26,6 +27,13 @@ class Adult(object):
     
     def print_total(self):
         return "Your Score: %d " % self.total
+    
+    # def question_counter(self):
+    #     q_total = 0
+    #     return self.question_num += 1
+    
+    def print_question_number(self):
+        return "# %d" % self.question_num
     
     def image_selector(self, screen, image):
         screen.blit(image, [self.x, self.y])

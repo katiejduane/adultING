@@ -9,7 +9,7 @@ class Scores_Button(object):
         # How big is the screen? We need a rect
         self.screen_rect = screen.get_rect()
         # Set screen width
-        self.width = 600
+        self.width = 500
         # Set height
         self.height = 25
         # Set color
@@ -42,7 +42,7 @@ class Life_Scores_Button(object):
         # How big is the screen? We need a rect
         self.screen_rect = screen.get_rect()
         # Set screen width
-        self.width = 600
+        self.width = 100
         # Set height
         self.height = 25
         # Set color
@@ -53,11 +53,44 @@ class Life_Scores_Button(object):
         # Set rect of button
         self.rect = pygame.Rect(0,0,self.width, self.height)
         # Set location of rect
-        self.rect.center = (300,490) 
+        self.rect.center = (550,490) 
 
     def score_message(self, Life):
         # Set up the message!
         self.image_message = self.font.render(Life.__repr__(), True, self.text_color)
+        self.image_message_rect = self.image_message.get_rect()
+        self.image_message_rect.center = self.rect.center
+
+    def draw_button(self):
+        # fill in the button
+        self.screen.fill(self.button_color, self.rect)
+        # actually DRAW the button
+        self.screen.blit(self.image_message, self.image_message_rect)
+
+
+class Question_Counter(object):
+    def __init__(self, screen): 
+        # Print the start button
+        self.screen = screen
+        # How big is the screen? We need a rect
+        self.screen_rect = screen.get_rect()
+        # Set screen width
+        self.width = 100
+        # Set height
+        self.height = 25
+        # Set color
+        self.button_color = 138, 142, 214
+        self.text_color = 255, 255, 255
+        # get font from pygame!
+        self.font = pygame.font.Font(None, 18)
+        # Set rect of button
+        self.rect = pygame.Rect(0,0,self.width, self.height)
+        # Set location of rect
+        self.rect.center = (50,490) 
+
+    def score_message(self, Adult):
+        # Set up the message!
+        self.image_message = self.font.render("Question " + Adult.print_question_number(), True, self.text_color)
         self.image_message_rect = self.image_message.get_rect()
         self.image_message_rect.center = self.rect.center
 

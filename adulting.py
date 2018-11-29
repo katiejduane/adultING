@@ -11,7 +11,7 @@ from buildings import Buildings
 from spaces import Spaces
 from backgrounds import Background
 from welcome_splash import Splash_Screen
-from scores import Scores_Button, Life_Scores_Button
+from scores import Scores_Button, Life_Scores_Button, Question_Counter
 from final_score_screen import Final_Score_Screen
 
 # Initialize pygame
@@ -39,28 +39,33 @@ travel_img = pygame.image.load('travel_agency.png')
 cafe_img = pygame.image.load('cafe_date.png')
 forest_img = pygame.image.load('forest.png')
 opportunity_img = pygame.image.load('opportunity.png')
+pond_img = pygame.image.load('pond.png')
+help_img = pygame.image.load('help.png')
+dancefloor_img = pygame.image.load('dance_floor.png')
+store_img = pygame.image.load('store.png')
 adult_img = char_fr
 
 # object declarations
-# welcome = Splash_Screen(screen)
 player_1 = Adult("Katie", char_fr, char_bk, char_r, char_l)
 life_1 = Life()
 score_tracker = Scores_Button(screen)
 life_tracker = Life_Scores_Button(screen)
+counter = Question_Counter(screen)
 background = Background(screen, 'map_lg.png')
 cafe = Buildings("Cafe", -644, -1136, -856, -1232)
 bank = Buildings("Bank", -164, -464, -380, -638)
 travel_agency = Buildings("Travel Agency", -284, -200, -422, -368)
 forest = Spaces("Forest", -1010, -32, -1742, -452)
 opportunity = Buildings("Opportunities", -194, -1094, -272, -1238)
-
+pond = Spaces("Pond", -1334, -1010, -1502, -1208)
+selfhelp = Buildings("Help!", -290, -770, -440, -1052)
+store = Buildings("Store", -1340, -500, -1562, -626)
+dancefloor = Spaces("Dance Floor", -1316, -758, -1532, -872)
 central_lake = Spaces("Central Lake", -746, -566, -1028, -812)
+
+# Final Screen
 final_screen = Final_Score_Screen(screen)
 
-
-# # game_functions
-# def change_background(screen, image):
-#     screen.blit(image, [0, 0])
 
 # sounds
 # bg_music = pygame.mixer.Sound('brainclaim_saw-cutting-2.wav')
@@ -122,20 +127,22 @@ while game_on == True:
                 background.should_move('right', False)
             elif event.key == 276:
                 background.should_move('left', False)
+
+        # =================== Question Logic ===================== #
+
             if event.key == 13 and over_cafe == True:
                 cafe_int = True
             if cafe_int == True:
-                print ("cafe int is true")
                 if event.key == pygame.K_1:
                     player_1.love_adjust(6), player_1.health_adjust(-3), player_1.adv_adjust(3)
                     life_1.adjust_levels(4)
                 elif event.key == pygame.K_2:
-                    player_1.love_adjust(8), player_1.health_adjust(2)
+                    player_1.love_adjust(9), player_1.health_adjust(3)
                 elif event.key == 32:
                     cafe_int = False
-                else:
-                    pass
+                # else:
                 # play error sound?
+                    player_1.question_num += 1
             if event.key == 13 and over_bank == True:
                 bank_int = True
             if bank_int == True:
@@ -147,9 +154,9 @@ while game_on == True:
                     life_1.adjust_levels(2)
                 elif event.key == 32:
                     bank_int = False
-                else:
-                    pass
+                # else:
                 # play error sound?
+                    player_1.question_num += 1
             if event.key == 13 and over_travel == True:
                 travel_int = True
             if travel_int == True:
@@ -167,6 +174,7 @@ while game_on == True:
                     travel_int = False
                 elif event.key != pygame.K_1 and event.key != pygame.K_2 and  event.key != pygame.K_3 and event.key != pygame.K_4 and event.key is not None:
                     bg_music.play() # This isn't working!
+                    player_1.question_num += 1
             if event.key == 13 and over_forest == True:
                 forest_int = True
             if forest_int == True:
@@ -179,6 +187,7 @@ while game_on == True:
                     player_1.adv_adjust(6), player_1.health_adjust(3), player_1.growth_adjust(3)
                 elif event.key == 32:
                     forest_int = False
+                    player_1.question_num += 1
             if event.key == 13 and over_opportunity == True:
                 opportunity_int = True
             if opportunity_int == True:
@@ -189,8 +198,65 @@ while game_on == True:
                     player_1.adv_adjust(-3), player_1.career_adjust(6), player_1.growth_adjust(3), player_1.finance_adjust(3)
                 elif event.key == 32:
                     opportunity_int = False
-
-
+                    player_1.question_num += 1
+            if event.key == 13 and over_pond == True:
+                pond_int = True
+            if pond_int == True:
+                if event.key == pygame.K_1:
+                    player_1.health_adjust(3), player_1.growth_adjust(6)
+                    life_1.adjust_levels(4)
+                elif event.key == pygame.K_2:
+                    player_1.adv_adjust(3), player_1.health_adjust(3)
+                elif event.key == pygame.K_3:
+                    player_1.growth_adjust(-6), player_1.health_adjust(-3)
+                elif event.key == 32:
+                    pond_int = False
+                    player_1.question_num += 1
+            if event.key == 13 and over_store == True:
+                store_int = True
+            if store_int == True:
+                if event.key == pygame.K_1:
+                    player_1.health_adjust(6), player_1.growth_adjust(3)
+                elif event.key == pygame.K_2:
+                    player_1.health_adjust(-6)
+                    life_1.adjust_levels(4)
+                elif event.key == pygame.K_3:
+                    player_1.growth_adjust(3), player_1.health_adjust(-3), player_1.adv_adjust(3)
+                elif event.key == pygame.K_4:
+                    player_1.growth_adjust(3), player_1.health_adjust(3), player_1.love_adjust(3)
+                elif event.key == 32:
+                    store_int = False
+                    player_1.question_num += 1
+            if event.key == 13 and over_dancefloor == True:
+                dancefloor_int = True
+            if dancefloor_int == True:
+                if event.key == pygame.K_1:
+                    player_1.growth_adjust(-3), player_1.adv_adjust(-6)
+                    life_1.adjust_levels(4)
+                elif event.key == pygame.K_2:
+                    player_1.growth_adjust(3)
+                elif event.key == pygame.K_3:
+                    player_1.growth_adjust(3), player_1.adv_adjust(6)
+                elif event.key == 32:
+                    dancefloor_int = False  
+                    player_1.question_num += 1
+            if event.key == 13 and over_help == True:
+                help_int = True
+            if help_int == True:
+                if event.key == pygame.K_1:
+                    player_1.growth_adjust(-3), player_1.adv_adjust(3), player_1.health_adjust(-3), player_1.finance_adjust(-6)
+                    life_1.adjust_levels(4)
+                elif event.key == pygame.K_2:
+                    player_1.growth_adjust(-6), player_1.health_adjust(-6)
+                    life_1.adjust_levels(4)
+                elif event.key == pygame.K_3:
+                    player_1.growth_adjust(3), player_1.health_adjust(3)
+                    life_1.adjust_levels(2)
+                elif event.key == pygame.K_4:
+                    player_1.growth_adjust(6), player_1.health_adjust(6)
+                elif event.key == 32:
+                    help_int = False   
+                    player_1.question_num += 1
             if event.key == 13 and over_central_lake == True:
                 final_score_screen_on = True
                 if final_score_screen_on == True:
@@ -212,27 +278,31 @@ while game_on == True:
         over_central_lake = False
         
         if background.x <= cafe.x1 and background.x >= cafe.x2 and background.y <= cafe.y1 and background.y >= cafe.y2:
-            print ("Cafe")
             over_cafe = True
         elif background.x <= bank.x1 and background.x >= bank.x2 and background.y <= bank.y1 and background.y >= bank.y2:
-            print ("Bank")
             over_bank = True
         elif background.x <= travel_agency.x1 and background.x >= travel_agency.x2 and background.y <= travel_agency.y1 and background.y >= travel_agency.y2:
-            print ("Travel")
             over_travel = True
         elif background.x <= forest.x1 and background.x >= forest.x2 and background.y <= forest.y1 and background.y >= forest.y2:
-            print ("Forest")
             over_forest = True
         elif background.x <= opportunity.x1 and background.x >= opportunity.x2 and background.y <= opportunity.y1 and background.y >= opportunity.y2:
-            print ("Opportunity")
             over_opportunity = True
+        elif background.x <= pond.x1 and background.x >= pond.x2 and background.y <= pond.y1 and background.y >= pond.y2:
+            over_pond = True
+        elif background.x <= store.x1 and background.x >= store.x2 and background.y <= store.y1 and background.y >= store.y2:
+            over_store = True
+        elif background.x <= selfhelp.x1 and background.x >= selfhelp.x2 and background.y <= selfhelp.y1 and background.y >= selfhelp.y2:
+            over_help = True
+        elif background.x <= dancefloor.x1 and background.x >= dancefloor.x2 and background.y <= dancefloor.y1 and background.y >= dancefloor.y2:
+            over_dancefloor = True
         elif background.x <= central_lake.x1 and background.x >= central_lake.x2 and background.y <= central_lake.y1 and background.y >= central_lake.y2:
-            print ("Central Lake")
             over_central_lake = True
 
-
+    player_1.update_total()
+    # player_1.question_counter()
     score_tracker.score_message(player_1)
     life_tracker.score_message(life_1)
+    counter.score_message(player_1)
     final_screen.score_message(player_1, life_1)
 
     
@@ -257,15 +327,27 @@ while game_on == True:
         screen.blit(forest_img, [0, 0])
     if opportunity_int == True:
         screen.blit(opportunity_img, [0, 0])
+    if pond_int == True:
+        screen.blit(pond_img, [0, 0])
+    if store_int == True:
+        screen.blit(store_img, [0, 0])
+    if help_int == True:
+        screen.blit(help_img, [0, 0])
+    if dancefloor_int == True:
+        screen.blit(dancefloor_img, [0, 0])
 
+    # final score screen/button
     if final_score_screen_on == True:
         final_screen.draw_button()
         
-    # method for changing the char image based on direction of mvmnt
     
-    # draw score button
-    score_tracker.draw_button()
-    life_tracker.draw_button()
+    # draw score buttons
+    if splash_on == False:
+        score_tracker.draw_button()
+    if splash_on == False:
+        life_tracker.draw_button()
+    if splash_on == False:
+        counter.draw_button()
     
 
     pygame.display.flip()

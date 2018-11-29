@@ -9,4 +9,4 @@ class Life(object):
     def adjust_levels(self, adjust):
         self.levels += adjust
     def __repr__(self):
-        return "Life's Score: %d" % self.levels
+        return "Life: %d" % self.levels
