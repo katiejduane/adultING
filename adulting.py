@@ -104,7 +104,7 @@ while game_on == True:
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
             splash_on = False   
-            bg_music.play(-1) # i need it to loop!
+            bg_music.play(-1) 
         if event.type == pygame.QUIT:
                 game_on = False
         if event.type == pygame.KEYDOWN:
