@@ -68,9 +68,6 @@ central_lake = Spaces("Central Lake", -746, -566, -1028, -812)
 final_screen = Final_Score_Screen(screen)
 
 
-# sounds
-# error_sound = pygame.mixer.Sound('brainclaim_saw-cutting-2.wav')
-
 # ====================MAIN GAME LOOP===================== #
 game_on = True
 splash_on = True
@@ -163,6 +160,7 @@ while game_on == True:
             if event.key == 13 and over_travel == True:
                 travel_int = True
             if travel_int == True:
+                # error_sound.pause() HOW TO FIX THIS?
                 if event.key == pygame.K_1:
                     player_1.health_adjust(-3), player_1.adv_adjust(-3)
                     life_1.adjust_levels(2)
